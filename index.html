@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #050505;
+            padding: 10px;
+            text-align: center;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 250px;
+            color: red;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        form input{
+            width: 250px;
+        }
+        form button {
+            width: 100px;
+            background-color: rgb(252, 184, 58);
+            border-radius: 8px;
+        }
+        #name{
+            margin-right: 145px;
+        }
+        #balls {
+            margin-right: 170px;
+        }
+        #score {
+            margin-right: 165px;
+        }
+        
+        
+
+    </style>
+</head>
+<body>
+    <h2>Cricket Score Calculator</h2>
+    <!-- Input Fields -->
+    <form action="">
+    <label for="batsmanName" id="name"><b>Batsman Name :</b></label>
+    <input type="text" id="batsmanName" required>
+
+    <label for="ballsFaced" id="balls"><b>Balls Faced :</b></label>
+    <input type="number" id="ballsFaced" required>
+
+    <label for="runsScored" id="score"><b>Runs Scored :</b></label>
+    <input type="number" id="runsScored" required>
+    <!-- Buttons -->
+    <button id="addButton">Add</button>
+    <button id="removeButton">Remove</button>
+
+    <!-- Table -->
+    <table id="batsmanTable">
+        <thead>
+            <tr>
+                <th>Batsman Name</th>
+                <th>Balls Faced</th>
+                <th>Runs Scored</th>
+                <th>Strike Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be added here dynamically -->
+        </tbody>
+    </table>
+
+    <script>
+        // Add event listener to the Add button
+        document.getElementById("addButton").addEventListener("click", function() {
+            // Get input values
+            var name = document.getElementById("batsmanName").value;
+            var runs = parseInt(document.getElementById("runsScored").value);
+            var balls = parseInt(document.getElementById("ballsFaced").value);
+
+            // Check if all fields are filled correctly
+            if (name && runs && balls && balls > 0) {
+                // Calculate the strike rate
+                var strikeRate = (runs * 100) / balls;
+
+                // Get the table body
+                var table = document.getElementById("batsmanTable").getElementsByTagName("tbody")[0];
+                // Insert a new row
+                var row = table.insertRow();
+
+                // Insert cells for name, balls faced, runs scored, and strike rate
+                row.insertCell(0).innerText = name;
+                row.insertCell(1).innerText = balls;
+                row.insertCell(2).innerText = runs;
+                row.insertCell(3).innerText = strikeRate.toFixed(2); // Round to two decimal places
+
+                // Clear input fields after adding the row
+               let a = document.getElementById("batsmanName").value = "";
+               let b = document.getElementById("runsScored").value = "";
+               let c = document.getElementById("ballsFaced").value = "";
+            } else {
+                alert("Please fill the all field");
+            }
+            
+        });
+
+        // Add event listener to the Remove button
+        document.getElementById("removeButton").addEventListener("click", function() {
+            var table = document.getElementById("batsmanTable").getElementsByTagName("tbody")[0];
+            var rowCount = table.rows.length;
+
+            // Check if there's at least one row to remove
+            if (rowCount > 0) {
+                table.deleteRow(rowCount - 1); // Remove the last row
+            } else {
+                alert("No rows to remove!");
+            }
+        });
+    </script>
+</body>
+</html>
